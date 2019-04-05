@@ -944,6 +944,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
+    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (battery_critical), &iter);
     
     if ( can_suspend && auth_suspend )
     {
@@ -962,10 +963,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_list_store_append(list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
     }
-    
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
-    
+
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_BATT_ACTION_CFG, XFPM_DO_NOTHING);
     
     for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);

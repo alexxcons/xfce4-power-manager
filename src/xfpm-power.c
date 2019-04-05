@@ -758,9 +758,7 @@ xfpm_power_show_critical_action (XfpmPower *power, XfpmBattery *battery)
 static void
 xfpm_power_process_critical_action (XfpmPower *power, XfpmShutdownRequest req)
 {
-    if ( req == XFPM_ASK )
-	g_signal_emit (G_OBJECT (power), signals [ASK_SHUTDOWN], 0);
-    else if ( req == XFPM_DO_SUSPEND )
+    if ( req == XFPM_DO_SUSPEND )
 	xfpm_power_sleep (power, "Suspend", TRUE);
     else if ( req == XFPM_DO_HIBERNATE )
 	xfpm_power_sleep (power, "Hibernate", TRUE);
@@ -1064,15 +1062,6 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                       XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, sleeping),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0, G_TYPE_NONE);
-
-    signals [ASK_SHUTDOWN] =
-        g_signal_new ("ask-shutdown",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, ask_shutdown),
                       NULL, NULL,
                       g_cclosure_marshal_VOID__VOID,
                       G_TYPE_NONE, 0, G_TYPE_NONE);
